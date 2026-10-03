@@ -10,18 +10,20 @@ import me.alpha432.oyvey.features.settings.Setting;
 import net.minecraft.util.Formatting;
 import org.lwjgl.glfw.GLFW;
 
-public class ClickGui
-        extends Module {
+public class ClickGui extends Module {
     private static ClickGui INSTANCE = new ClickGui();
     public Setting<String> prefix = str("Prefix", ".");
+    
+    // Glowing green theme color settings
     public Setting<Integer> red = num("Red", 0, 0, 255);
-    public Setting<Integer> green = num("Green", 0, 0, 255);
-    public Setting<Integer> blue = num("Blue", 255, 0, 255);
-    public Setting<Integer> hoverAlpha = num("Alpha", 180, 0, 255);
+    public Setting<Integer> green = num("Green", 255, 0, 255);
+    public Setting<Integer> blue = num("Blue", 70, 0, 255);
+    public Setting<Integer> hoverAlpha = num("Alpha", 200, 0, 255);
     public Setting<Integer> topRed = num("SecondRed", 0, 0, 255);
-    public Setting<Integer> topGreen = num("SecondGreen", 0, 0, 255);
-    public Setting<Integer> topBlue = num("SecondBlue", 150, 0, 255);
+    public Setting<Integer> topGreen = num("SecondGreen", 200, 0, 255);
+    public Setting<Integer> topBlue = num("SecondBlue", 40, 0, 255);
     public Setting<Integer> alpha = num("HoverAlpha", 240, 0, 255);
+    
     public Setting<Boolean> rainbow = bool("Rainbow", false);
     public Setting<Integer> rainbowHue = num("Delay", 240, 0, 600);
     public Setting<Float> rainbowBrightness = num("Brightness ", 150.0f, 1.0f, 255.0f);
@@ -29,7 +31,7 @@ public class ClickGui
     private OyVeyGui click;
 
     public ClickGui() {
-        super("ClickGui", "Opens the ClickGui", Module.Category.CLIENT, true, false, false);
+        super("ClickGui", "Opens the Weed Client ClickGui", Module.Category.CLIENT, true, false, false);
         setBind(GLFW.GLFW_KEY_RIGHT_SHIFT);
         rainbowHue.setVisibility(v -> rainbow.getValue());
         rainbowBrightness.setVisibility(v -> rainbow.getValue());
@@ -53,7 +55,7 @@ public class ClickGui
         if (event.getStage() == 2 && event.getSetting().getFeature().equals(this)) {
             if (event.getSetting().equals(this.prefix)) {
                 OyVey.commandManager.setPrefix(this.prefix.getPlannedValue());
-                Command.sendMessage("Prefix set to " + Formatting.DARK_GRAY + OyVey.commandManager.getPrefix());
+                Command.sendMessage("Weed Client prefix set to " + Formatting.GREEN + OyVey.commandManager.getPrefix());
             }
             OyVey.colorManager.setColor(this.red.getPlannedValue(), this.green.getPlannedValue(), this.blue.getPlannedValue(), this.hoverAlpha.getPlannedValue());
         }
@@ -83,12 +85,10 @@ public class ClickGui
     public enum rainbowModeArray {
         Static,
         Up
-
     }
 
     public enum rainbowMode {
         Static,
         Sideway
-
     }
 }
